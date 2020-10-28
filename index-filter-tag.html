@@ -310,57 +310,57 @@ var map = new mapboxgl.Map({
 */
 
 map.on('load', function (e) {
-// Add a GeoJSON source containing place coordinates and information.
-map.addSource('places', {
-'type': 'geojson',
-'data': places
-});
-
-
-places.features.forEach(function (feature) {
-var tag = feature.properties['tag'];
-var source = 'poi-' + tag;
-
-// Add a layer for this symbol type if it hasn't been added already.
-if (!map.getLayer(source)) {
-map.addLayer({
-'id': source,
-'type': 'circle',
-'source': 'places',
-'layout': {
-// make layer visible by default
-'visibility': 'visible'
-},
-'paint': {
-'circle-radius': 8,
-'circle-color': 'rgba(55,148,179,1)'
-},
-'filter': ['==', 'tag', tag]
-});
-
-
-// Add checkbox and label elements for the layer.
-var input = document.createElement('input');
-input.type = 'checkbox';
-input.id = source;
-input.checked = true;
-filterGroup.appendChild(input);
-
-var label = document.createElement('label');
-label.setAttribute('for', source);
-label.textContent = tag;
-filterGroup.appendChild(label);
-
-  // When the checkbox changes, update the visibility of the layer.
-  input.addEventListener('change', function (e) {
-    map.setLayoutProperty(
-    source,
-    'visibility',
-    e.target.checked ? 'visible' : 'none'
-    );
+  // Add a GeoJSON source containing place coordinates and information.
+  map.addSource('places', {
+  'type': 'geojson',
+  'data': places
   });
-}
-});
+
+
+  places.features.forEach(function (feature) {
+  var tag = feature.properties['tag'];
+  var source = 'poi-' + tag;
+
+  // Add a layer for this symbol type if it hasn't been added already.
+  if (!map.getLayer(source)) {
+    map.addLayer({
+    'id': source,
+    'type': 'circle',
+    'source': 'places',
+    'layout': {
+    // make layer visible by default
+    'visibility': 'visible'
+    },
+    'paint': {
+    'circle-radius': 8,
+    'circle-color': 'rgba(55,148,179,1)'
+    },
+    'filter': ['==', 'tag', tag]
+    });
+
+
+    // Add checkbox and label elements for the layer.
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = source;
+    input.checked = true;
+    filterGroup.appendChild(input);
+
+    var label = document.createElement('label');
+    label.setAttribute('for', source);
+    label.textContent = tag;
+    filterGroup.appendChild(label);
+
+      // When the checkbox changes, update the visibility of the layer.
+      input.addEventListener('change', function (e) {
+        map.setLayoutProperty(
+        source,
+        'visibility',
+        e.target.checked ? 'visible' : 'none'
+        );
+      });
+    }
+  });
 });
 
 

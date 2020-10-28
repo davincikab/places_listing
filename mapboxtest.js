@@ -8,267 +8,11 @@
     };
   }
 
-// DATA SOURCE - GEOJSON FORMAT!!!!!!!!!!!!!!!
-  var places = {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.034084142948,
-            38.909671288923
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-          "country": "United States",
-          "url":"www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": true,
-          "Mountain": false,
-          "Forest": true,
-          "tag":"Forest"
-
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.049766,
-            38.900772
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-          "country": "United States",
-          "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": true,
-          "Mountain": false,
-          "Forest": true,
-          "tag":"Island"
-
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.043929,
-            38.910525
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-	  "country": "United States",
-          "url": "www.google.com",
-          "img":"shop.jpg",
-	  "imglist":"shop.jpg",
-          "Island": true,
-          "Mountain": false,
-          "Forest": false,
-          "tag":"Mountain"
-
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.0672,
-            38.90516896
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-          "country": "United States",
-          "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": false,
-          "Forest": true,
-          "tag":"Island"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.002583742142,
-            38.887041080933
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Island"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -76.933492720127,
-            38.99225245786
-          ]
-        },
-        "properties": {
-          "city": "College Park",
-          "country": "United States",
-  	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Island"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.097083330154,
-            38.980979
-          ]
-        },
-        "properties": {
-          "city": "Bethesda",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Coastal"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.359425054188,
-            38.958058116661
-          ]
-        },
-        "properties": {
-          "city": "Reston",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Coastal"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.10853099823,
-            38.880100922392
-          ]
-        },
-        "properties": {
-          "city": "Arlington",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": true,
-          "Mountain": false,
-          "Forest": false,
-          "tag":"Forest"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -75.28784,
-            40.008008
-          ]
-        },
-        "properties": {
-          "city": "Ardmore",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Island"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -75.20121216774,
-            39.954030175164
-          ]
-        },
-        "properties": {
-          "city": "Philadelphia",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": false,
-          "Mountain": true,
-          "Forest": false,
-          "tag":"Mountain"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -77.043959498405,
-            38.903883387232
-          ]
-        },
-        "properties": {
-          "city": "Washington DC",
-          "country": "United States",
-	  "url": "www.google.com",
-          "img":"shop.jpg",
-          "imglist":"shop.jpg",
-          "Island": true,
-          "Mountain": false,
-          "Forest": false,
-          "tag":"Island"
-        }
-      }
-    ]
-  };
+var filterEl = document.getElementById('feature-filter');
+var listings = document.getElementById('listings');
+var featuresInView = places.features;
+var activeItemId = null;
+var filterGroup = document.getElementById('filter-group');
   /**
    * Assign a unique id to each place. You'll use this `id` later to associate each point on the map with a listing in the sidebar.
   */
@@ -282,7 +26,7 @@
   */
   // API KEY!!!!!!!!!!!!!!!
   mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc2FsdGllZXhwbG9yZXIiLCJhIjoiY2tmeTg2YWVtMXhmMDJzc3ZyOTUycTNtbyJ9.pu1-8Za3pD_7a8VXGb2Qaw';
-  var filterGroup = document.getElementById('filter-group');
+ 
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v10',
@@ -299,111 +43,176 @@
     /**
      * This is where your '.addLayer()' used to be, instead add only the source without styling a layer
     */
+    // load the images
+    map.loadImage('marker.png', function(error, image) {
+      if (error) throw error;
+      if (!map.hasImage('marker-icon')) map.addImage('marker-icon', image);
+    });
+
     map.addSource("places", {
       "type": "geojson",
       "data": places
     });
+
+    map.addLayer({
+      "id":"places-layer",
+      "type":"symbol",
+      "source":"places",
+      "paint":{
+
+      },
+      "layout":{
+        "icon-image":"marker-icon",
+        "icon-size":0.8
+      }
+    });
+
     /**
      * Add all the things to the page:
      * - The location listings on the side of the page
      * - The markers onto the map
-    */
-    buildLocationList(places);
-    addMarkers();
+    */   
+
+     // layer interactivity
+    map.on("mouseenter", "places-layer", function(e) {
+      map.getCanvas().style.cursor = "pointer";
+    });
+
+    map.on("mouseleave", "places-layer", function(e) {
+      map.getCanvas().style.cursor = "";
+    });
+
+    map.on("click", "places-layer", function(e) {
+      let features = map.queryRenderedFeatures(e.point, { layers: ['places-layer'] });
+
+      if(features[0]) {
+        activeItemId = 'listing-' + features[0].properties.id;
+
+        createPopUp(features[0]);
+        flyToplace(features[0]);       
+      }
+
+    });
+
+    map.on('moveend', function(e) {
+      console.log("Movend");
+      displayFeaturesOnMap();
+    });
+
+    
+    buildLocationList(places.features);
   });
+
+  // filter features on map move
+  function displayFeaturesOnMap() {
+    var features = map.queryRenderedFeatures({ layers: ['places-layer'] });
+    console.log(features);
+    if (features) {
+      // Populate features for the listing overlay.
+      buildLocationList(features);
+
+      // Clear the input container
+      filterEl.value = '';
+
+      // Store the current features in sn `places` variable to
+      // later use for filtering on `keyup`.
+      featuresInView = features;
+    }
+
+    if(activeItemId) {
+      updateActiveListItem(activeItemId);
+    }
+  }
+
+  // Update active list item with class active
+  function updateActiveListItem(activeItemId) {
+    if(!activeItemId) return;
+
+    var activeItem = document.getElementsByClassName('active');
+    if (activeItem[0]) {
+      activeItem[0].classList.remove('active');
+    }
+
+    var listing = document.getElementById(activeItemId);
+    listing.classList.add('active');
+  }
 
 // MARKER FUNCTION !!!!!!!!!!!!!!!
   /**
    * Add a marker to the map for every place listing.
   **/
-  function addMarkers() {
-    /* For each feature in the GeoJSON object above: */
-    places.features.forEach(function(marker) {
-      /* Create a div element for the marker. */
-      var el = document.createElement('div');
-      /* Assign a unique `id` to the marker. */
-      el.id = "marker-" + marker.properties.id;
-      /* Assign the `marker` class to each marker for styling. */
-      el.className = 'marker';
-      /**
-       * Create a marker using the div element defined above and add it to the map.
-      **/
-      new mapboxgl.Marker(el, { offset: [0, -23] })
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(map);
-      /**
-       * Listen to the element and when it is clicked, do three things:
-       * 1. Fly to the point
-       * 2. Close all other popups and display popup for clicked place
-       * 3. Highlight listing in sidebar (and remove highlight for all other listings)
-      **/
-      el.addEventListener('click', function(e){
-        /* Fly to the point */
-        flyToplace(marker);
-        /* Close all other popups and display popup for clicked place */
-        createPopUp(marker);
-        /* Highlight listing in sidebar */
-        var activeItem = document.getElementsByClassName('active');
-        e.stopPropagation();
-        if (activeItem[0]) {
-          activeItem[0].classList.remove('active');
-        }
-        var listing = document.getElementById('listing-' + marker.properties.id);
-        listing.classList.add('active');
-      });
-    });
+  function filterControl() {
     // FILTER FUNCTION !!!!!!!!!!!!!!!
-    places.features.forEach(function(feature) {
-    var tag = feature.properties['tag'];
-    var source = 'places' + tag;
+    let tags = [... new Set(places.features.map(feature => feature.properties.tag))];
+
+    tags.forEach(function(tag) {
+      var source = 'places' + tag;
 
     // Add a layer for this symbol type if it hasn't been added already.
-      if (!map.getLayer(source)) {
-        map.addLayer({
-        'id': source,
-        'type': 'circle',
-        'source': 'places',
-        'layout': {
-          // make layer visible by default
-          'visibility': 'visible'
-        },
-        'paint': {
-          'circle-radius': 8,
-          'circle-color': 'rgba(55,148,179,1)'
-        },
-          'filter': ['==', 'tag', tag]
+      
+      // Add checkbox and label elements for the layer.
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      input.id = tag;
+      input.name = tag
+      input.classList.add("filter")
+      input.checked = true;
+      filterGroup.appendChild(input);
+
+      var label = document.createElement('label');
+      label.setAttribute('for', tag);
+      label.textContent = tag;
+      filterGroup.appendChild(label);
+
+      // When the checkbox changes, update the visibility of the layer.
+      var filterCheckbox = document.querySelectorAll('.filter');
+
+      filterCheckbox.forEach(filterElement => {
+        filterElement.addEventListener('change', function (e) {
+          console.log("Click Event");
+          let target = e.target;
+
+          var placeType = {
+            value:target.checked,
+            name:target.id
+          };
+
+          // filter function
+          getPlaceType(placeType)
         });
-
-        // Add checkbox and label elements for the layer.
-        var input = document.createElement('input');
-        input.type = 'checkbox';
-        input.id = source;
-        input.checked = true;
-        filterGroup.appendChild(input);
-
-        var label = document.createElement('label');
-        label.setAttribute('for', source);
-        label.textContent = tag;
-        filterGroup.appendChild(label);
-
-        // When the checkbox changes, update the visibility of the layer.
-        input.addEventListener('change', function (e) {
-          map.setLayoutProperty(
-          source,
-          'visibility',
-          e.target.checked ? 'visible' : 'none'
-          );
-        });
-      }
+      })
+      
     });
   }
+
+  // filter data matching the give criteria
+  function getPlaceType({value, name}) {
+    let data = JSON.parse(JSON.stringify(places));
+
+    // get the data matching the criteria
+    data.features = data.features.filter(feature => feature.properties[name] == value);
+
+    // update the listing
+    buildLocationList(data.features);
+
+    // update filter feature
+    featuresInView = data.features;
+
+    // update the map
+    map.getSource("places").setData(data)
+  }
+
+  filterControl();
 
 // LISTING FUNCTION !!!!!!!!!!!!!!!
 /**
  * Add a listing for each place to the sidebar.
 **/
   function buildLocationList(data) {
-    data.features.forEach(function(place, i){
+    // clear all the data from listing
+    listings.innerHTML = "";
+
+    data.forEach(function(place, i){
       /**
        * Create a shortcut for `place.properties`,
        * which will be used several times below.
@@ -411,8 +220,8 @@
       var prop = place.properties;
 
       /* Add a new listing section to the sidebar. */
-      var listings = document.getElementById('listings');
       var listing = listings.appendChild(document.createElement('div'));
+
       /* Assign a unique `id` to the listing. */
       listing.id = "listing-" + prop.id;
       /* Assign the `item` class to each listing for styling. */
@@ -434,9 +243,9 @@
       **/
       link.addEventListener('click', function(e) {
 
-        for (var i=0; i < data.features.length; i++) {
-          if (this.id === "link-" + data.features[i].properties.id) {
-            var clickedListing = data.features[i];
+        for (var i=0; i < data.length; i++) {
+          if (this.id === "link-" + data[i].properties.id) {
+            var clickedListing = data[i];
 
             flyToplace(clickedListing);
             createPopUp(clickedListing);
@@ -483,10 +292,26 @@
   }
 
 
-// SEARCH FUNCTION !!!!!!!!!!!!!!!
+  // SEARCH FUNCTION !!!!!!!!!!!!!!!
+  filterEl.addEventListener('keyup', function (e) {
+    var value = normalize(e.target.value);
 
+    // if(value)
 
+    // Filter visible features that don't match the input value.
+    var filtered = featuresInView.filter(function (feature) {
+      var city = normalize(feature.properties.city);
+      var country = normalize(feature.properties.country);
+      return city.indexOf(value) > -1 || country.indexOf(value) > -1;
+    });
 
+    console.log(filtered);
+    buildLocationList(filtered);
+  });
+
+  function normalize(string) {
+    return string.trim().toLowerCase();
+  }
 
 
 // LAST SECTION - MAP CONTROLS!!!!!!!!!!!!!!!
