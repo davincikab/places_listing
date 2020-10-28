@@ -1,0 +1,75 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 HelveticaNeue-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww13220\viewh12360\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 DOCUMENTS
+\f1\b0 \
+Master: index.html (originally: 
+\f2 https://docs.mapbox.com/help/tutorials/building-a-store-locator/)
+\f1 \
+\
+Feature sources:\
+- Search function: \
+index-filter-name.html (
+\f2 https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/)\
+-Filter function: \
+index-filter-tag.html (https://docs.mapbox.com/mapbox-gl-js/example/filter-markers/)\
+index-filter-tag2.html (https://docs.mapbox.com/mapbox.js/example/v1.0.0/markers-with-multiple-filters/)\
+\
+Style: map.css\
+\
+Scripts: mapboxtest.js\
+Only the master script is in this document. All other scripts to be implemented are in their respective .html files within a <script> tag.\
+\
+\
+
+\f3\b INTRO
+\f2\b0 \
+All sources have been standardized with the same data source (var= places).\
+All features work individually.\
+\
+
+\f3\b MASTER
+\f2\b0 \
+All features should be implemented within the mapboxtest.js file, already containing the main script of the base features I need.\
+The index.html file contains all the features I MUST have:\
+-Markers\
+-Listings\
+-Popups\
+-Fly to function\
+All these functions should still work, in conjunction with the functions hereunder. \
+\
+
+\f3\b SEARCH FUNCTION
+\f2\b0 \
+As it is now, the function shows no results before the map is moved. The search is already configured to return what I want (city or country). \
+\
+I would need the following:\
+1- On load, it should show all locations (on the map and in the sidebar) within the default view of the loading map. \
+2- The div\'a0 \'ab\'a0Drag map the map to populate results\'a0\'bb should be deleted then.\
+3- Delete the airplane symbols and link it to the markers in the master html instead. \
+\
+There is a bit of a styling issue, but I guess it might be fixed once it\'92s fused with the master file\
+\
+
+\f3\b FILTER FUNCTION
+\f2\b0 \
+Ideally, I would prefer for the index-filter-tag.html version. But one issue I might see with this is that I don't see how to attribute 2 tags to the same geojson element and have the filter work correctly. \
+\
+I would need the following: \
+1- A Select/Deselect all button. If too complicated, it\'92s ok. \
+2-  Instead of the blue circles you see in the master html, the filters should be linked to the markers. I left the script of index-filter-tag.html in the mapboxtest.js file, so you can see what I mean. \
+3- The filters should also filter the listings in the sidebar \
+4- If possible, it would be nice if two \'ab\'a0tag\'a0\'bb geojson properties could be recognized by the filter, thus if an element is island + forest, it would show if either filter is selected.\
+\
+Alternatively, you could also use the index-filter-tag2.html function, but I would need to be able to select multiples filters instead of just one. \
+\
+
+\f3\b CSS STYLING\
+
+\f2\b0 1- I found a way to fit images in the listings sidebar of the master html. But it might not be the right way of doing it. If you have a better idea, please do. \
+2- I implemented a button in the popups, but when I try to include a link in the img (so that the user could click on \'ab\'a0\'a0Read More\'a0\'bb or the image) for some reason the <a> style of the button applies to the image even when using the \'ab\'a0not:img" in the css\'85}

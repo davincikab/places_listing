@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Multiple filters on markers</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+  <link rel="stylesheet" href="map.css" type="text/css" />
+</head>
+
+<body>
+
+<!-- jQuery is required for this example. -->
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+
+<div class='sidebar'>
+  <div class='heading'>
+    <fieldset>
+    <input id="feature-filter" type="text" placeholder="Search for your next destination!"/>
+    </fieldset>
+  </div>
+  <div id='listings' class='listings'></div>
+</div>
+<div id='map' class='map'></div>
+<nav class='menu-ui'>
+  <a href='#' class='active' data-filter='all'>Show all</a>
+  <a href='#' data-filter='Island'>Island</a>
+  <a href='#' data-filter='Mountain'>Mountain</a>
+  <a href='#' data-filter='Forest'>Forest</a>
+</nav>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoidGhlc2FsdGllZXhwbG9yZXIiLCJhIjoiY2tmeTg2YWVtMXhmMDJzc3ZyOTUycTNtbyJ9.pu1-8Za3pD_7a8VXGb2Qaw';
+// In the propeties object for each marker define key's
+// like `Island`, `Forest`, `Mountain` that are set to true for false
+// depending on whether or they exist at a location.
+var places = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -74.435720443726,
+          39.353812390495
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "title": "Marina #1",
+        "Island": true,
+        "Mountain": false,
+        "Forest": false,
+        "marker-color": "#1087bf",
+        "marker-size": "large",
+        "marker-symbol": "harbor",
+        "tag": "Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -123.37030649185,
+          48.4253703539
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "title": "Marina #2",
+        "Island": true,
+        "Mountain": false,
+        "Forest": true,
+        "marker-color": "#1087bf",
+        "marker-size": "large",
+        "marker-symbol": "harbor",
+        "tag": "Forest"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -122.4444937706,
+          37.807478357821
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "title": "Marina #3",
+        "Island": false,
+        "Mountain": true,
+        "Forest": true,
+        "marker-color": "#1087bf",
+        "marker-size": "large",
+        "marker-symbol": "harbor",
+        "tag": "Mountain"
+      }
+    }
+  ]
+};
+
+var map = L.mapbox.map('map')
+    .setView([42.68, -95.63], 4)
+    .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+var markers = L.mapbox.featureLayer()
+    .setGeoJSON(places)
+    .addTo(map);
+
+$('.menu-ui a').on('click', function() {
+    // For each filter link, get the 'data-filter' attribute value.
+    var filter = $(this).data('filter');
+    $(this).addClass('active').siblings().removeClass('active');
+    markers.setFilter(function(f) {
+        // If the data-filter attribute is set to "all", return
+        // all (true). Otherwise, filter on markers that have
+        // a value set to true based on the filter name.
+        return (filter === 'all') ? true : f.properties[filter] === true;
+    });
+    return false;
+});
+</script>
+<script src="mapbox.js"></script>
+</body>
+</html>

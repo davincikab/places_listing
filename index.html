@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Store Locator</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"/>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="map.css" type="text/css" />
+
+  </head>
+  <body>
+
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+
+    <div class='sidebar'>
+      <div class='heading'>
+        <fieldset>
+        <input id="feature-filter" type="text" placeholder="Search for your next destination!"/>
+        </fieldset>
+      </div>
+      <div id='listings' class='listings'></div>
+    </div>
+    <div id='map' class='map'></div>
+    <nav class='menu-u'>
+      <a href='#' class='active' data-filter='all'>Show all</a>
+      <a href='#' data-filter='Island'>Island</a>
+      <a href='#' data-filter='Mountain'>Mountain</a>
+      <a href='#' data-filter='Forest'>Forest</a>
+    </nav>
+    <nav id="filter-group" class="filter-group"></nav>
+    <script src="mapboxtest.js"></script>
+  </body>
+</html>

@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Store Locator</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"/>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="map.css" type="text/css" />
+  </head>
+
+<body>
+
+  <div class='sidebar'>
+    <div class='heading'>
+      <fieldset>
+      <input id="feature-filter" type="text" placeholder="Search for your next destination!"/>
+      </fieldset>
+    </div>
+  <div id="listings" class="listings"></div>
+  </div>
+  <div id='map' class='map'></div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc2FsdGllZXhwbG9yZXIiLCJhIjoiY2tmeTg2YWVtMXhmMDJzc3ZyOTUycTNtbyJ9.pu1-8Za3pD_7a8VXGb2Qaw';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v10',
+  center: [-77.034084142948, 38.909671288923],
+  maxZoom: 10,
+  minZoom: 3,
+  zoom: 8
+});
+
+// Holds visible airport features for filtering
+var places = [];
+
+var filterEl = document.getElementById('feature-filter');
+var listingEl = document.getElementById('listings');
+
+function renderListings(features) {
+  var empty = document.createElement('p');
+  // Clear any existing listings
+  listingEl.innerHTML = '';
+
+  if (features.length) {
+    features.forEach(function (feature) {
+      var prop = feature.properties;
+      var link = document.createElement('a');
+      link.href = prop.url;
+      link.target = '_blank';
+      link.innerHTML = prop.city + "<br>" + "<img src='"+prop.img+ "'</img>" + "<h4>"+prop.country+"</h4>";
+      listingEl.appendChild(link);
+    });
+
+    // Show the filter input
+    filterEl.parentNode.style.display = 'block';
+  } else if (features.length === 0 && filterEl.value !== '') {
+    empty.textContent = 'No results found';
+    listingEl.appendChild(empty);
+
+  } else {
+    empty.textContent = 'Drag the map to populate results';
+    listingEl.appendChild(empty);
+
+    // remove features filter
+    map.setFilter('places');
+  }
+}
+
+function normalize(string) {
+  return string.trim().toLowerCase();
+}
+
+function getUniqueFeatures(array, comparatorProperty) {
+  var existingFeatureKeys = {};
+  // Because features come from tiled vector data, feature geometries may be split
+  // or duplicated across tile boundaries and, as a result, features may appear
+  // multiple times in query results.
+  var uniqueFeatures = array.filter(function (el) {
+    if (existingFeatureKeys[el.properties[comparatorProperty]]) {
+      return false;
+    } else {
+      existingFeatureKeys[el.properties[comparatorProperty]] = true;
+      return true;
+    }
+  });
+
+  return uniqueFeatures;
+}
+
+map.on('load', function () {
+  map.addSource('places', {
+    'type': 'geojson',
+    'data': places
+  });
+
+  map.addLayer({
+    'id': 'places',
+    'source': 'places',
+    'type': 'symbol',
+    'layout': {
+      'icon-image': 'airport-15',
+      'icon-padding': 0,
+      'icon-allow-overlap': true
+    }
+  });
+
+  map.on('moveend', function () {
+    var features = map.queryRenderedFeatures({ layers: ['places'] });
+
+    if (features) {
+      var uniqueFeatures = getUniqueFeatures(features, 'city');
+      // Populate features for the listing overlay.
+      renderListings(uniqueFeatures);
+
+      // Clear the input container
+      filterEl.value = '';
+
+      // Store the current features in sn `places` variable to
+      // later use for filtering on `keyup`.
+      places = uniqueFeatures;
+    }
+  });
+
+  map.on('load', function (e) {
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = 'pointer';
+  });
+
+
+  filterEl.addEventListener('keyup', function (e) {
+    var value = normalize(e.target.value);
+
+    if(value)
+
+    // Filter visible features that don't match the input value.
+    var filtered = places.features.filter(function (feature) {
+      var city = normalize(feature.properties.city);
+      var country = normalize(feature.properties.country);
+      return city.indexOf(value) > -1 || country.indexOf(value) > -1;
+    });
+
+    console.log(filtered);
+
+    // Populate the sidebar with filtered results
+    renderListings(filtered);
+
+    // Set the filter to populate features into the layer.
+    if (filtered.length) {
+      map.setFilter('places', [
+      'match',
+      ['get', 'city'],
+      filtered.map(function (feature) {
+        return feature.properties.city;
+      }),
+      true,
+      false
+      ]);
+    }
+  });
+
+  // Call this function on initialization
+  // passing an empty array to render an empty state
+  renderListings([]);
+});
+
+var places = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.034084142948,
+          38.909671288923
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 234-7336",
+        "phone": "2022347336",
+        "address": "1471 P St NW",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "at 15th St NW",
+        "postalCode": "20005",
+        "state": "D.C.",
+        "url":"",
+        "img":"shop.jpg",
+        "Island": true,
+        "Mountain": false,
+        "Forest": true,
+        "tag":"#Forest",
+        "imglist":"shop.jpg"
+
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.049766,
+          38.900772
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 507-8357",
+        "phone": "2025078357",
+        "address": "2221 I St NW",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "at 22nd St NW",
+        "postalCode": "20037",
+        "state": "D.C.",
+        "url": "",
+        "img":"shop.jpg",
+        "Island": true,
+        "Mountain": false,
+        "Forest": true,
+        "tag":"#Island",
+        "imglist":"shop.jpg"
+
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.043929,
+          38.910525
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 387-9338",
+        "phone": "2023879338",
+        "address": "1512 Connecticut Ave NW",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "at Dupont Circle",
+        "postalCode": "20036",
+        "state": "D.C.",
+        "url": "",
+        "img":"shop.jpg",
+        "Island": true,
+        "Mountain": false,
+        "Forest": false,
+        "tag":"#Mountain",
+        "imglist":"shop.jpg"
+
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0672,
+          38.90516896
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 337-9338",
+        "phone": "2023379338",
+        "address": "3333 M St NW",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "at 34th St NW",
+        "postalCode": "20007",
+        "state": "D.C.",
+        "url": "https://thesaltieexplorer.com/destinations/europe/italy/maddalena.html",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": false,
+        "Forest": true,
+        "tag":"#Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.002583742142,
+          38.887041080933
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 547-9338",
+        "phone": "2025479338",
+        "address": "221 Pennsylvania Ave SE",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "btwn 2nd & 3rd Sts. SE",
+        "postalCode": "20003",
+        "state": "D.C.",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.933492720127,
+          38.99225245786
+        ]
+      },
+      "properties": {
+        "address": "8204 Baltimore Ave",
+        "city": "College Park",
+        "country": "United States",
+        "postalCode": "20740",
+        "state": "MD",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.097083330154,
+          38.980979
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(301) 654-7336",
+        "phone": "3016547336",
+        "address": "4831 Bethesda Ave",
+        "cc": "US",
+        "city": "Bethesda",
+        "country": "United States",
+        "postalCode": "20814",
+        "state": "MD",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Coastal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.359425054188,
+          38.958058116661
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(571) 203-0082",
+        "phone": "5712030082",
+        "address": "11935 Democracy Dr",
+        "city": "Reston",
+        "country": "United States",
+        "crossStreet": "btw Explorer & Library",
+        "postalCode": "20190",
+        "state": "VA",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Coastal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.10853099823,
+          38.880100922392
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(703) 522-2016",
+        "phone": "7035222016",
+        "address": "4075 Wilson Blvd",
+        "city": "Arlington",
+        "country": "United States",
+        "crossStreet": "at N Randolph St.",
+        "postalCode": "22203",
+        "state": "VA",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": true,
+        "Mountain": false,
+        "Forest": false,
+        "tag":"#Forest"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.28784,
+          40.008008
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(610) 642-9400",
+        "phone": "6106429400",
+        "address": "68 Coulter Ave",
+        "city": "Ardmore",
+        "country": "United States",
+        "postalCode": "19003",
+        "state": "PA",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.20121216774,
+          39.954030175164
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(215) 386-1365",
+        "phone": "2153861365",
+        "address": "3925 Walnut St",
+        "city": "Philadelphia",
+        "country": "United States",
+        "postalCode": "19104",
+        "state": "PA",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": false,
+        "Mountain": true,
+        "Forest": false,
+        "tag":"#Mountain"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.043959498405,
+          38.903883387232
+        ]
+      },
+      "properties": {
+        "phoneFormatted": "(202) 331-3355",
+        "phone": "2023313355",
+        "address": "1901 L St. NW",
+        "city": "Washington DC",
+        "country": "United States",
+        "crossStreet": "at 19th St",
+        "postalCode": "20036",
+        "state": "D.C.",
+        "img":"shop.jpg",
+        "imglist":"shop.jpg",
+        "Island": true,
+        "Mountain": false,
+        "Forest": false,
+        "tag":"#Island"
+      }
+    }
+  ]
+};
+
+</script>
+
+</body>
+</html>
