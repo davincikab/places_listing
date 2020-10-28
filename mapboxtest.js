@@ -329,10 +329,12 @@ var filterCheckbox;
     var popup = new mapboxgl.Popup({closeOnClick: true})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<h3>'+ currentFeature.properties.city + '</h3>' +
-        "<img src='"+currentFeature.properties.img+ "'</img>" +
+        '<a  href="' + currentFeature.properties.url + '">'+
+        '<img src="'+currentFeature.properties.img+ '"/>' +
+        '</a>'+
         '<h4>' + currentFeature.properties.country + '</h4>' +
         '<h5>'+ currentFeature.properties.tag + '. ' + currentFeature.properties.city + '</h5>' +
-        '<a href=' + currentFeature.properties.url + '>Read More!</a>')
+        '<a href=' + currentFeature.properties.url + ' class="read-more">Read More!</a>')
       .addTo(map);
   }
 

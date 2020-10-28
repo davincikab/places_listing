@@ -216,7 +216,7 @@
     height: auto;
     border-radius: 0; }
 
-  .mapboxgl-popup-content a {
+  .mapboxgl-popup-content .read-more{
     background-color:#4682b4;
   	border-radius:28px;
   	border:1px solid #4e6096;
