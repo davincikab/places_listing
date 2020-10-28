@@ -13,6 +13,7 @@ var listings = document.getElementById('listings');
 var featuresInView = places.features;
 var activeItemId = null;
 var filterGroup = document.getElementById('filter-group');
+var filterCheckbox;
   /**
    * Assign a unique id to each place. You'll use this `id` later to associate each point on the map with a listing in the sidebar.
   */
@@ -144,6 +145,7 @@ var filterGroup = document.getElementById('filter-group');
   function filterControl() {
     // FILTER FUNCTION !!!!!!!!!!!!!!!
     let tags = [... new Set(places.features.map(feature => feature.properties.tag))];
+    tags.push("Deselect All");
 
     tags.forEach(function(tag) {
       var source = 'places' + tag;
@@ -161,16 +163,29 @@ var filterGroup = document.getElementById('filter-group');
 
       var label = document.createElement('label');
       label.setAttribute('for', tag);
+      label.id = tag.toLocaleLowerCase().replace(" ", '-');
       label.textContent = tag;
-      filterGroup.appendChild(label);
+      filterGroup.appendChild(label);      
+    });
 
       // When the checkbox changes, update the visibility of the layer.
-      var filterCheckbox = document.querySelectorAll('.filter');
+      filterCheckbox = document.querySelectorAll('.filter');
 
       filterCheckbox.forEach(filterElement => {
-        filterElement.addEventListener('change', function (e) {
-          console.log("Click Event");
+        filterElement.addEventListener('input', function (e) {
           let target = e.target;
+
+          console.log(target.checked);
+
+          if(target.name == "Deselect All") {
+            let selectAllLabel = document.getElementById('deselect-all');
+
+            if(target.checked) {
+              selectAllLabel.textContent = "Deselect All";
+            }else {
+              selectAllLabel.textContent = "Select All";
+            }
+          }        
 
           var placeType = {
             value:target.checked,
@@ -180,17 +195,46 @@ var filterGroup = document.getElementById('filter-group');
           // filter function
           getPlaceType(placeType)
         });
-      })
-      
-    });
+
+      });
   }
 
   // filter data matching the give criteria
   function getPlaceType({value, name}) {
     let data = JSON.parse(JSON.stringify(places));
 
-    // get the data matching the criteria
-    data.features = data.features.filter(feature => feature.properties[name] == value);
+    if(name == "Deselect All" && value) {
+      filterCheckbox.forEach(checkbox => {
+        checkbox.checked = true;
+        return checkbox;
+      });
+
+    } else if (name == "Deselect All" && !value) {
+      filterCheckbox.forEach(checkbox => {
+        checkbox.checked = false;
+        return checkbox;
+      });
+      
+      data.features = [];
+    } else {
+      // get all the checbox values 
+      let filterValues = [];
+
+      filterCheckbox.forEach(checkbox => {
+        if(checkbox.checked) {
+          filterValues.push(checkbox.id);
+        }
+      });
+
+      console.log(filterValues);
+      filterValues = filterValues.indexOf('Deslect All') ? filterValues.slice(0,-1) : filterValues;
+
+      // --------- multiple filters --------
+      // get the data matching the criteria
+      data.features = data.features.filter(feature => filterValues.indexOf(feature.properties.tag) !== -1);
+    }
+
+    
 
     // update the listing
     buildLocationList(data.features);
