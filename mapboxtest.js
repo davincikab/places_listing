@@ -187,6 +187,7 @@ var filterCheckbox;
             }
           }        
 
+          // get checked place type
           var placeType = {
             value:target.checked,
             name:target.id
@@ -276,7 +277,7 @@ var filterCheckbox;
       link.href = '#';
       link.className = 'title';
       link.id = "link-" + prop.id;
-      link.innerHTML = prop.city + "<br>" + "<img src='"+prop.img+ "'</img>" + "<h4>"+prop.country+"</h4>";
+      link.innerHTML = "<div>"+ prop.city  +"<h4>"+prop.country+"</h4></div>" + "<img src='"+prop.img+ "'</img>";
 
       /**
        * Listen to the element and when it is clicked, do four things:

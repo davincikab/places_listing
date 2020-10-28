@@ -93,29 +93,37 @@
   .listings h4 {
     margin: 0;
     display: block;
-    padding: 10px 10px 10px 10px;
+    /* padding: 10px 10px 10px 10px; */
     font-weight: 400;
   }
 
   .listings img {
     width: 45%;
-    height: 45%;
+    /* height: 45%; */
     border-radius: 10px;
-    display:inline;
-    margin-left: 12px;
-    margin-top: -20px;
-    float: right;
+    /* display:inline; */
+    /* margin-left: 12px; */
+    /* margin-top: -20px; */
+    /* float: right; */
+    flex: 0.48;
   }
 
   .listings .item:last-child {
     border-bottom: none;
   }
+
   .listings .item .title {
-    display: block;
+    display: flex;
+    flex-direction: row-reverse;
     color: #4682B4;
     font-weight: 700;
+    align-items: center;
+    justify-content: space-between;
   }
 
+  .item .title div{
+    flex: 0.5;
+  }
   .listings .item .title small {
     font-weight: 400;
   }
