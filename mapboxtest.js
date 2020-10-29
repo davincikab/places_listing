@@ -207,6 +207,22 @@ var filterCheckbox;
       });
     }
 
+    // get the checkbox values
+     // get all the checbox values 
+     let filterValues = [];
+
+     filterCheckbox.forEach(checkbox => {
+       if(checkbox.checked) {
+         filterValues.push(
+           {name:checkbox.id, value:checkbox.checked}
+         );
+       }
+     });
+
+    filterValues = filterValues.some(object => object.name == 'Select All') ? filterValues.slice(0,-1) : filterValues;
+      console.log(filterValues);
+
+    // filter 
     if (name == "Select All" && !value) {
       filterCheckbox.forEach(checkbox => {
         checkbox.checked = false;
@@ -214,21 +230,12 @@ var filterCheckbox;
       });
       
       // data.features = [];
-    } else {
-      // get all the checbox values 
-      let filterValues = [];
+    } else if( filterValues.length == 0) {
 
-      filterCheckbox.forEach(checkbox => {
-        if(checkbox.checked) {
-          filterValues.push(
-            {name:checkbox.id, value:checkbox.checked}
-          );
-        }
-      });
+    }
+    else {
 
-      filterValues = filterValues.some(object => object.name == 'Select All') ? filterValues.slice(0,-1) : filterValues;
-      console.log(filterValues);
-
+      
       // --------- multiple filters --------
       // get the data matching the criteria
       let features = [];
