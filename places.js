@@ -62,8 +62,8 @@
           "img":"shop.jpg",
 	  "imglist":"shop.jpg",
           "Island": true,
-          "Mountain": false,
-          "Forest": false,
+          "Mountain": true,
+          "Forest": true,
           "tag":"Mountain"
 
         }

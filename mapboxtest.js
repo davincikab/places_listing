@@ -64,15 +64,11 @@ var filterCheckbox;
       },
       "layout":{
         "icon-image":"marker-icon",
-        "icon-size":0.8
+        // "icon-allow-overlap":true,  
+        "icon-size":0.8,
+        "icon-ignore-placement":true
       }
     });
-
-    /**
-     * Add all the things to the page:
-     * - The location listings on the side of the page
-     * - The markers onto the map
-    */   
 
      // layer interactivity
     map.on("mouseenter", "places-layer", function(e) {
@@ -223,16 +219,33 @@ var filterCheckbox;
 
       filterCheckbox.forEach(checkbox => {
         if(checkbox.checked) {
-          filterValues.push(checkbox.id);
+          filterValues.push(
+            {name:checkbox.id, value:checkbox.checked}
+          );
         }
       });
 
       console.log(filterValues);
-      filterValues = filterValues.indexOf('Deslect All') ? filterValues.slice(0,-1) : filterValues;
+      filterValues = filterValues.some(object => object.name == 'Deselect All') ? filterValues.slice(0,-1) : filterValues;
 
       // --------- multiple filters --------
       // get the data matching the criteria
-      data.features = data.features.filter(feature => filterValues.indexOf(feature.properties.tag) !== -1);
+      let features = [];
+
+      // Multiple feature filter
+      filterValues.forEach((filter, i) => {
+        let filterFeatures;
+        if(i == 0){
+          filterFeatures = data.features.filter(feature => feature.properties[filter.name] == filter.value);
+        } else {
+          filterFeatures = features.filter(feature => feature.properties[filter.name] == filter.value);
+        }
+
+        features = [...filterFeatures];
+      });
+
+      // update data features
+      data.features = features;
     }
 
     
@@ -241,7 +254,7 @@ var filterCheckbox;
     buildLocationList(data.features);
 
     // update filter feature
-    featuresInView = data.features;
+    // featuresInView = data.features;
 
     // update the map
     map.getSource("places").setData(data)
@@ -326,7 +339,7 @@ var filterCheckbox;
   function createPopUp(currentFeature) {
     var popUps = document.getElementsByClassName('mapboxgl-popup');
     if (popUps[0]) popUps[0].remove();
-    var popup = new mapboxgl.Popup({closeOnClick: true})
+    var popup = new mapboxgl.Popup({closeOnClick: true, anchor:'bottom', offset:[0,30]})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<h3>'+ currentFeature.properties.city + '</h3>' +
         '<a  href="' + currentFeature.properties.url + '">'+
@@ -344,9 +357,10 @@ var filterCheckbox;
     var value = normalize(e.target.value);
 
     // if(value)
+    let dataFeatures = JSON.parse(JSON.stringify(places));
 
     // Filter visible features that don't match the input value.
-    var filtered = featuresInView.filter(function (feature) {
+    var filtered = dataFeatures.features.filter(function (feature) {
       var city = normalize(feature.properties.city);
       var country = normalize(feature.properties.country);
       return city.indexOf(value) > -1 || country.indexOf(value) > -1;
@@ -354,6 +368,10 @@ var filterCheckbox;
 
     console.log(filtered);
     buildLocationList(filtered);
+    map.getSource("places").setData({
+      "type": "FeatureCollection",
+      "features":filtered
+    });
   });
 
   function normalize(string) {
