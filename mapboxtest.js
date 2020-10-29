@@ -140,7 +140,9 @@ var filterCheckbox;
   **/
   function filterControl() {
     // FILTER FUNCTION !!!!!!!!!!!!!!!
-    let tags = [... new Set(places.features.map(feature => feature.properties.tag))];
+    let tags = ['Island', 'Mountain', 'Forest'];
+    // [... new Set(places.features.map(feature => feature.properties.tag))];
+
     tags.push("Deselect All");
 
     tags.forEach(function(tag) {
@@ -225,8 +227,8 @@ var filterCheckbox;
         }
       });
 
-      console.log(filterValues);
       filterValues = filterValues.some(object => object.name == 'Deselect All') ? filterValues.slice(0,-1) : filterValues;
+      console.log(filterValues);
 
       // --------- multiple filters --------
       // get the data matching the criteria
@@ -235,7 +237,7 @@ var filterCheckbox;
       // Multiple feature filter
       filterValues.forEach((filter, i) => {
         let filterFeatures;
-        if(i == 0){
+        if(i == 0) {
           filterFeatures = data.features.filter(feature => feature.properties[filter.name] == filter.value);
         } else {
           filterFeatures = features.filter(feature => feature.properties[filter.name] == filter.value);
@@ -245,6 +247,7 @@ var filterCheckbox;
       });
 
       // update data features
+      console.log(features);
       data.features = features;
     }
 
