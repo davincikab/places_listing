@@ -140,10 +140,8 @@ var filterCheckbox;
   **/
   function filterControl() {
     // FILTER FUNCTION !!!!!!!!!!!!!!!
-    let tags = ['Island', 'Mountain', 'Forest'];
+    let tags = ['Island', 'Mountain', 'Forest', 'Select All'];
     // [... new Set(places.features.map(feature => feature.properties.tag))];
-
-    tags.push("Deselect All");
 
     tags.forEach(function(tag) {
       var source = 'places' + tag;
@@ -156,7 +154,7 @@ var filterCheckbox;
       input.id = tag;
       input.name = tag
       input.classList.add("filter")
-      input.checked = true;
+      input.checked = false;
       filterGroup.appendChild(input);
 
       var label = document.createElement('label');
@@ -175,8 +173,8 @@ var filterCheckbox;
 
           console.log(target.checked);
 
-          if(target.name == "Deselect All") {
-            let selectAllLabel = document.getElementById('deselect-all');
+          if(target.name == "Select All") {
+            let selectAllLabel = document.getElementById('select-all');
 
             if(target.checked) {
               selectAllLabel.textContent = "Deselect All";
@@ -202,19 +200,20 @@ var filterCheckbox;
   function getPlaceType({value, name}) {
     let data = JSON.parse(JSON.stringify(places));
 
-    if(name == "Deselect All" && value) {
+    if(name == "Select All" && value) {
       filterCheckbox.forEach(checkbox => {
         checkbox.checked = true;
         return checkbox;
       });
+    }
 
-    } else if (name == "Deselect All" && !value) {
+    if (name == "Select All" && !value) {
       filterCheckbox.forEach(checkbox => {
         checkbox.checked = false;
         return checkbox;
       });
       
-      data.features = [];
+      // data.features = [];
     } else {
       // get all the checbox values 
       let filterValues = [];
@@ -227,7 +226,7 @@ var filterCheckbox;
         }
       });
 
-      filterValues = filterValues.some(object => object.name == 'Deselect All') ? filterValues.slice(0,-1) : filterValues;
+      filterValues = filterValues.some(object => object.name == 'Select All') ? filterValues.slice(0,-1) : filterValues;
       console.log(filterValues);
 
       // --------- multiple filters --------
