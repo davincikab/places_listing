@@ -140,8 +140,8 @@ var filterCheckbox;
   **/
   function filterControl() {
     // FILTER FUNCTION !!!!!!!!!!!!!!!
-    let tags = ['Island', 'Mountain', 'Forest', 'Select All'];
-    // [... new Set(places.features.map(feature => feature.properties.tag))];
+    let tags = [... new Set(places.features.map(feature => feature.properties.tag))];
+    tags.push('Deselect All');
 
     tags.forEach(function(tag) {
       var source = 'places' + tag;
@@ -154,7 +154,7 @@ var filterCheckbox;
       input.id = tag;
       input.name = tag
       input.classList.add("filter")
-      input.checked = false;
+      input.checked = true;
       filterGroup.appendChild(input);
 
       var label = document.createElement('label');
@@ -173,13 +173,13 @@ var filterCheckbox;
 
           console.log(target.checked);
 
-          if(target.name == "Select All") {
-            let selectAllLabel = document.getElementById('select-all');
+          if(target.name == "Deselect All") {
+            let selectAllLabel = document.getElementById('deselect-all');
 
             if(target.checked) {
-              selectAllLabel.textContent = "Deselect All";
-            }else {
               selectAllLabel.textContent = "Select All";
+            }else {
+              selectAllLabel.textContent = "Deselect All";
             }
           }        
 
@@ -200,61 +200,35 @@ var filterCheckbox;
   function getPlaceType({value, name}) {
     let data = JSON.parse(JSON.stringify(places));
 
-    if(name == "Select All" && value) {
+    if(name == "Deselect All" && value) {
       filterCheckbox.forEach(checkbox => {
         checkbox.checked = true;
         return checkbox;
       });
-    }
 
-    // get the checkbox values
-     // get all the checbox values 
-     let filterValues = [];
-
-     filterCheckbox.forEach(checkbox => {
-       if(checkbox.checked) {
-         filterValues.push(
-           {name:checkbox.id, value:checkbox.checked}
-         );
-       }
-     });
-
-    filterValues = filterValues.some(object => object.name == 'Select All') ? filterValues.slice(0,-1) : filterValues;
-      console.log(filterValues);
-
-    // filter 
-    if (name == "Select All" && !value) {
+    } else if (name == "Deselect All" && !value) {
       filterCheckbox.forEach(checkbox => {
         checkbox.checked = false;
         return checkbox;
       });
       
-      // data.features = [];
-    } else if( filterValues.length == 0) {
+      data.features = [];
+    } else {
+      // get all the checbox values 
+      let filterValues = [];
 
-    }
-    else {
-
-      
-      // --------- multiple filters --------
-      // get the data matching the criteria
-      let features = [];
-
-      // Multiple feature filter
-      filterValues.forEach((filter, i) => {
-        let filterFeatures;
-        if(i == 0) {
-          filterFeatures = data.features.filter(feature => feature.properties[filter.name] == filter.value);
-        } else {
-          filterFeatures = features.filter(feature => feature.properties[filter.name] == filter.value);
+      filterCheckbox.forEach(checkbox => {
+        if(checkbox.checked) {
+          filterValues.push(checkbox.id);
         }
-
-        features = [...filterFeatures];
       });
 
-      // update data features
-      console.log(features);
-      data.features = features;
+      console.log(filterValues);
+      filterValues = filterValues.indexOf('Deselect All') ? filterValues.slice(0,-1) : filterValues;
+
+      // --------- multiple filters --------
+      // get the data matching the criteria
+      data.features = data.features.filter(feature => filterValues.indexOf(feature.properties.tag) != -1);
     }
 
     
@@ -263,10 +237,10 @@ var filterCheckbox;
     buildLocationList(data.features);
 
     // update filter feature
-    // featuresInView = data.features;
+    featuresInView = data.features;
 
     // update the map
-    map.getSource("places").setData(data)
+    map.getSource("places").setData(data);
   }
 
   filterControl();
